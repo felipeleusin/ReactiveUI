@@ -7,11 +7,12 @@ using UIKit;
 using ReactiveUI;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace PlaygroundXamForms.iOS
 {
     [Register ("AppDelegate")]
-    public partial class AppDelegate : UIApplicationDelegate
+    public partial class AppDelegate : FormsApplicationDelegate
     {
         UIWindow window;
         AutoSuspendHelper suspendHelper;
@@ -31,12 +32,10 @@ namespace PlaygroundXamForms.iOS
             suspendHelper.FinishedLaunching(app, options);
 
             window = new UIWindow (UIScreen.MainScreen.Bounds);
-            var vc = RxApp.SuspensionHost.GetAppState<AppBootstrapper>().CreateMainView().CreateViewController();
 
-            window.RootViewController = vc;
-            window.MakeKeyAndVisible ();
+            LoadApplication(RxApp.SuspensionHost.GetAppState<AppBootstrapper>().CreateFormsApplication());
 
-            return true;
+            return base.FinishedLaunching(app, options);
         }
 
         public override void DidEnterBackground(UIApplication application)

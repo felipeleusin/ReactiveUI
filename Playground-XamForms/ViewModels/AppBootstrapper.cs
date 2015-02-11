@@ -22,9 +22,16 @@ namespace PlaygroundXamForms
            // Router.NavigationStack.Add(new TestViewModel(this));
         }
 
-        public Page CreateMainView()
+        public class FormsApp : Application {
+            public FormsApp()
+            {
+                MainPage = new RoutedViewHost();
+            }
+        }
+
+        public Application CreateFormsApplication()
         {
-            return new RoutedViewHost();
+            return new FormsApp();
         }
     }
 }
